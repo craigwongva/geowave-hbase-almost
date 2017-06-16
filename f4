@@ -1,0 +1,18 @@
+wget http://apache.mirrors.ionfish.org/hbase/stable/hbase-1.2.6-bin.tar.gz
+tar xzvf hbase-1.2.6-bin.tar.gz
+cd hbase-1.2.6
+cd conf
+sed -i "s/# export JAVA_HOME=\/usr\/java\/jdk1.6.0\//export JAVA_HOME=\/usr\/lib\/jvm\/java-1.8.0-openjdk/" hbase-env.sh
+sed -i "/\/configuration/d" hbase-site.xml
+cat <<- EOF >> hbase-site.xml
+ <property>
+  <name>hbase.cluster.distributed</name>
+  <value>true</value>
+ </property>
+ <property>
+  <name>hbase.rootdir</name>
+  <value>hdfs://localhost:9000/oopbasewave</value>
+ </property>
+</configuration>
+EOF
+

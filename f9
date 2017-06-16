@@ -1,0 +1,5 @@
+mkdir –p /tmp/geowave
+INSTALL_PATH=/tmp/geowave
+cd ~
+./walnut.sh
+

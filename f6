@@ -1,0 +1,6 @@
+sudo rpm -Uvh http://s3.amazonaws.com/geowave-rpms/release/noarch/geowave-0.9.4-core.201704301157.noarch.rpm
+sudo rpm -Uvh http://s3.amazonaws.com/geowave-rpms/release/noarch/geowave-0.9.4-docs.201704301157.noarch.rpm
+sudo rpm -Uvh http://s3.amazonaws.com/geowave-rpms/release/noarch/geowave-0.9.4-apache-tools.201704301157.noarch.rpm
+sudo rpm -Uvh http://s3.amazonaws.com/geowave-rpms/release/noarch/geowave-0.9.4-apache-hbase.201704301157.noarch.rpm
+sudo rpm -Uvh http://s3.amazonaws.com/geowave-rpms/release/noarch/geowave-0.9.4-apache-jetty.201704301157.noarch.rpm
+

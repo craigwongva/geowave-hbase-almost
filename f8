@@ -1,0 +1,41 @@
+sed -i "/The EMR customize hooks run/,\$d" walnut.sh
+cat <<- EOF >> walnut.sh
+#Install GeoWave components
+#Start a map reduce job
+
+if [ ! -f \$INSTALL_PATH/geowave-env.sh ]; then
+    curl http://s3.amazonaws.com/geowave/latest/scripts/emr/quickstart/geowave-env.sh -o \$INSTALL_PATH/geowave-env.sh
+fi
+if [ ! -f \$INSTALL_PATH/KDEColorMap.sld ]; then
+    curl http://s3.amazonaws.com/geowave/latest/scripts/emr/quickstart/KDEColorMap.sld -o \$INSTALL_PATH/KDEColorMap.sld
+fi
+if [ ! -f \$INSTALL_PATH/SubsamplePoints.sld ]; then
+    curl http://s3.amazonaws.com/geowave/latest/scripts/emr/quickstart/SubsamplePoints.sld -o \$INSTALL_PATH/SubsamplePoints.sld
+fi
+if [ ! -f \$INSTALL_PATH/setup-geoserver-geowave-workspace.sh ]; then
+    curl http://s3.amazonaws.com/geowave/latest/scripts/emr/quickstart/setup-geoserver-geowave-workspace.sh -o \$INSTALL_PATH/setup-geoserver-geowave-workspace.sh
+fi
+if [ ! -f $INSTALL_PATH/ingest-and-kde-gdelt.sh ]; then
+    curl http://s3.amazonaws.com/geowave/latest/scripts/emr/quickstart/hbase/ingest-and-kde-gdelt.sh -o \$INSTALL_PATH/ingest-and-kde-gdelt.sh
+fi
+
+export HOSTNAME=localhost
+
+if [ ! -d \$INSTALL_PATH/mnt ]; then
+    mkdir \$INSTALL_PATH/mnt
+fi
+sed -i "s#export STAGING_DIR=/mnt#export STAGING_DIR=\$INSTALL_PATH/mnt#" \$INSTALL_PATH/geowave-env.sh
+sed -i "s/export HDFS_PORT=8020/export HDFS_PORT=9000/" \$INSTALL_PATH/geowave-env.sh
+sed -i "s#^hadoop#~/hadoop-2.7.3-3/hadoop/bin/hadoop#" \$INSTALL_PATH/ingest-and-kde-gdelt.sh
+
+source \$INSTALL_PATH/geowave-env.sh
+
+chmod 755 \$INSTALL_PATH/*.sh
+
+export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk.x86_64
+
+sleep 2
+cd \$INSTALL_PATH;./ingest-and-kde-gdelt.sh
+
+EOF
+

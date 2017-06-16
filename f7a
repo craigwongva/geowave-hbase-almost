@@ -1,0 +1,4 @@
+cd ~
+curl http://s3.amazonaws.com/geowave/latest/scripts/emr/quickstart/hbase/bootstrap-geowave.sh > walnut.sh
+chmod +x walnut.sh
+

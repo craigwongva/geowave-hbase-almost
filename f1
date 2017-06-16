@@ -1,0 +1,13 @@
+wget https://bitnami.com/redirect/to/134040/bitnami-hadoop-2.7.3-3-linux-x64-installer.run
+chmod +x bitnami-hadoop-2.7.3-3-linux-x64-installer.run
+cat <<- EOF > foo
+/home/ec2-user/hadoop-2.7.3-3
+hadoopuser
+hadooppassword
+hadooppassword
+
+Y
+
+EOF
+cat foo | ./bitnami-hadoop-2.7.3-3-linux-x64-installer.run
+
